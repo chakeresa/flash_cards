@@ -1,5 +1,7 @@
 class Turn
   attr_reader :card, :guess
+  require './lib/card'
+  require 'pry'
   def initialize(guess, card)
     @guess = guess
     @card = card

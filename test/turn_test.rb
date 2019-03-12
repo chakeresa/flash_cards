@@ -47,4 +47,10 @@ class TurnTest < Minitest::Test
     assert_equal "Incorrect.", turn.feedback
   end
 
+  def test_card_answer_returns_answer
+    card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
+    turn = Turn.new("Ir", card)
+    assert_equal "Fe", card.answer
+  end
+
 end
