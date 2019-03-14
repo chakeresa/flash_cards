@@ -3,7 +3,7 @@ require './lib/card'
 require './lib/deck'
 
 class Round
-  attr_reader :deck, :turns, :number_correct
+  attr_reader :deck, :turns, :number_correct, :start_messages, :prompt_messages, :end_messages
 
   def initialize(deck)
     @deck = deck
@@ -29,28 +29,43 @@ class Round
     new_turn
   end
 
-  def start # ****try to abstract out the messages from here****
-    puts "Welcome! You're playing with #{@deck.count} cards."
-    puts "-------------------------------------------------"
+  def start_messages
+    start_message = "Welcome! You're playing with #{@deck.count} cards."
+    start_message += "\n-------------------------------------------------"
+    start_message
+  end
+
+  def prompt_messages
+    prompt_message = "This is card number #{@turns.count + 1} out of #{@deck.count}."
+    prompt_message += "\nQuestion: #{current_card.question}"
+    prompt_message += "\nEnter your guess: > "
+    prompt_message
+  end
+
+  def end_messages
+    end_message = "****** Game over! ******"
+    end_message += "\nYou had #{@number_correct} correct guesses out of #{@deck.count} for a total score of #{percent_correct}%."
+
+    all_categories_and_percentages.each do |category, percent|
+      end_message += "\n#{category} - #{percent}% correct"
+    end
+
+    end_message
+  end
+
+  def start
+    puts start_messages
 
     while @turns.count < @deck.count
-      puts "This is card number #{@turns.count + 1} out of #{@deck.count}."
-      puts "Question: #{current_card.question}"
+      print prompt_messages
 
-      print "Enter your guess: > "
       guess = gets.chomp
       take_turn(guess)
 
       puts @turns.last.feedback
     end
 
-    puts "****** Game over! ******"
-    puts "You had #{@number_correct} correct guesses out of #{@deck.count} for a total score of #{percent_correct}%."
-
-    all_categories_and_percentages.each do |category, percent|
-      puts "#{category} - #{percent}% correct"
-    end
-
+    puts end_messages
   end
 
   def number_correct_by_category(category)

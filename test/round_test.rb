@@ -148,4 +148,42 @@ class RoundTest < Minitest::Test
     assert_in_delta 66.7, round.all_categories_and_percentages[:STEM], 0.1
   end
 
+  def test_start_messages
+    round = @round
+
+    assert_includes round.start_messages, "Welcome! You're playing with 4 cards."
+    assert_includes round.start_messages, "---"
+  end
+
+  def test_prompt_messages_first_question
+    round = @round
+
+    assert_includes round.prompt_messages, "This is card number 1 out of 4."
+    assert_includes round.prompt_messages, "Question: What is the capital of Alaska?"
+    assert_includes round.prompt_messages, "Enter your guess:"
+  end
+
+  def test_prompt_messages_second_question
+    round = @round
+
+    round.take_turn("Juneau")
+
+    assert_includes round.prompt_messages, "The Viking spacecraft sent back to Earth photographs and reports about the surface of which planet?"
+  end
+
+  def test_end_messages
+    round = @round
+
+    round.take_turn("Juneau") # right answer in Geography category
+    round.take_turn("Mars") # right answer in STEM category
+    round.take_turn("East") # wrong answer in STEM category
+    round.take_turn("Ir") # wrong answer in STEM category
+
+    assert_includes round.end_messages, "***"
+    assert_includes round.end_messages, "Game over!"
+    assert_includes round.end_messages, "You had 2 correct guesses out of 4 for a total score of 50.0%."
+    assert_includes round.end_messages, "Geography - 100.0% correct"
+    assert_includes round.end_messages, "STEM - 33.3% correct"
+  end
+
 end
