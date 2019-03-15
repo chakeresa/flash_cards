@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/card'
 require './lib/deck'
 require './lib/round'
-require 'pry' # ****delete me****
 
 
 class RoundTest < Minitest::Test

@@ -4,7 +4,6 @@ require './lib/card'
 require './lib/deck'
 require './lib/round'
 require './lib/card_generator'
-require 'pry'
 
 class CardGeneratorTest < Minitest::Test
 
