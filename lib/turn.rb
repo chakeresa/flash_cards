@@ -5,7 +5,12 @@ class Turn
 
   def initialize(guess, card)
     @guess = guess
-    @card = card
+
+    if card.class == Card # only allows Card inputs
+      @card = card
+    else
+      p "Fix input -- second argument of Turn.new should be of Card class"
+    end
   end
 
   def correct?
