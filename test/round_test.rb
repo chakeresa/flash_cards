@@ -17,10 +17,22 @@ class RoundTest < Minitest::Test
     @round = Round.new(deck)
   end
 
+  def test_it_exists
+    round = @round
+
+    assert_instance_of Round, round
+  end
+
   def test_it_has_a_deck
     round = @round
 
     assert_instance_of Deck, round.deck
+  end
+
+  def test_input_must_be_a_deck
+    round = Round.new(25)
+
+    assert_nil round.deck
   end
 
   def test_it_has_turn_with_a_current_card
@@ -131,6 +143,17 @@ class RoundTest < Minitest::Test
 
     assert_equal 1, round.number_correct_by_category(:Geography)
     assert_equal 2, round.number_correct_by_category(:STEM)
+  end
+
+  def test_it_returns_zero_correct_for_nonexistant_category
+    round = @round
+
+    round.take_turn("Juneau") # correct answer in :Geography category
+    round.take_turn("Mars") # correct answer in :STEM category
+    round.take_turn("West") # incorrect answer in :STEM category
+    round.take_turn("Fe") # correct answer in :STEM category
+
+    assert_equal 0, round.number_correct_by_category(:PopCulture)
   end
 
   def test_it_calculates_percent_correct_for_a_category

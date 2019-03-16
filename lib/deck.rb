@@ -1,8 +1,8 @@
 class Deck
   attr_reader :cards
-  
+
   def initialize(cards)
-    @cards = cards
+    @cards = cards.select {|element| element.class == Card} # only allows Card inputs, ignores the others
   end
 
   def count
