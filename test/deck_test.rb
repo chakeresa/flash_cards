@@ -13,6 +13,7 @@ class DeckTest < Minitest::Test
 
     assert_instance_of Array, deck.cards
     assert_equal 3, deck.count
+    assert_equal cards, deck.cards
   end
 
   def test_non_cards_arent_added_to_deck
