@@ -26,4 +26,12 @@ class CardGeneratorTest < Minitest::Test
     assert_equal "red panda", cards[1].answer
     assert_equal "Turing Staff", cards[1].category
   end
+
+  def test_invalid_inputs_are_not_stored_as_cards
+    filename = "bad_cards.txt" # has 4 valid cards and 2 invalid ones
+    card_generator = CardGenerator.new(filename)
+    cards = card_generator.cards
+
+    assert_equal 4, cards.count
+  end
 end
