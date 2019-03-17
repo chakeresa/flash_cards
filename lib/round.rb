@@ -3,7 +3,7 @@ require './lib/card'
 require './lib/deck'
 
 class Round
-  attr_reader :deck, :turns, :number_correct, :start_messages, :prompt_messages, :end_messages
+  attr_reader :deck, :turns, :number_correct
 
   def initialize(deck)
     if deck.class == Deck # only allows Deck inputs
@@ -11,6 +11,7 @@ class Round
     else
       p "Fix input -- argument of Round.new should be of Deck class"
     end
+
     @turns = []
     @number_correct = 0
     @current_question = 0
@@ -73,15 +74,11 @@ class Round
   end
 
   def number_correct_by_category(category)
-    correct_in_category = 0
 
-    turns_in_category(category).each do |turn| # to do: redo with another enum
-      if turn.correct?
-        correct_in_category += 1
-      end
+    turns_in_category(category).count do |turn|
+      turn.correct?
     end
 
-    correct_in_category
   end
 
   def percent_correct
@@ -101,7 +98,7 @@ class Round
   def all_categories_and_percentages
     data = {}
 
-    @turns.each do |turn| # to do: redo with another enum
+    @turns.each do |turn| # to do: redo with another enum... hm I can't find one that creates hashes (except with each_with_index, which isn't what I'm looking for)
       data[turn.card.category] = percent_correct_by_category(turn.card.category)
     end
 
