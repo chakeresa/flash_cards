@@ -73,20 +73,20 @@ class Round
     puts end_messages
   end
 
-  def number_correct_by_category(category)
-
-    turns_in_category(category).count do |turn|
-      turn.correct?
-    end
-
-  end
-
   def percent_correct
     (@number_correct.to_f) / (@turns.count) * 100
   end
 
   def turns_in_category(category)
     @turns.select{|turn| turn.card.category == category}
+  end
+
+  def number_correct_by_category(category)
+
+    turns_in_category(category).count do |turn|
+      turn.correct?
+    end
+
   end
 
   def percent_correct_by_category(category)
