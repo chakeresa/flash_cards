@@ -22,7 +22,8 @@ class TurnTest < Minitest::Test
     card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
     turn = Turn.new("Ir", card)
 
-    assert_equal Card, turn.card.class
+    assert_equal card, turn.card
+    assert_instance_of Card, turn.card
   end
 
   def test_it_needs_a_card_object
