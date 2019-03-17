@@ -22,7 +22,8 @@ class TurnTest < Minitest::Test
     card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
     turn = Turn.new("Ir", card)
 
-    assert_equal Card, turn.card.class
+    assert_equal card, turn.card
+    assert_instance_of Card, turn.card
   end
 
   def test_it_needs_a_card_object
@@ -32,9 +33,16 @@ class TurnTest < Minitest::Test
     assert_nil turn.card
   end
 
-  def test_right_answer_is_correct # to do: add a test that it's not case sensitive
+  def test_right_answer_is_correct
     card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
     turn = Turn.new("Fe", card)
+
+    assert turn.correct?
+  end
+
+  def test_right_answer_is_not_case_sensitive
+    card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
+    turn = Turn.new("FE", card)
 
     assert turn.correct?
   end
@@ -58,13 +66,6 @@ class TurnTest < Minitest::Test
     turn = Turn.new("Ir", card)
 
     assert_equal "Incorrect.", turn.feedback
-  end
-
-  def test_card_answer_returns_answer
-    card = Card.new("What is the abbreviation for iron?", "Fe", :STEM)
-    turn = Turn.new("Ir", card)
-
-    assert_equal "Fe", card.answer
   end
 
 end
