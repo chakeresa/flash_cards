@@ -12,9 +12,9 @@ class RoundTest < Minitest::Test
     card_3 = Card.new("Describe in words the exact direction that is 697.5° clockwise from due north?", "North north west", :STEM)
     card_4 = Card.new("What is the abbreviation for the element iron?", "Fe", :STEM)
 
-    deck = Deck.new([card_1, card_2, card_3, card_4])
+    @deck = Deck.new([card_1, card_2, card_3, card_4])
 
-    @round = Round.new(deck)
+    @round = Round.new(@deck)
   end
 
   def test_it_exists
@@ -27,6 +27,7 @@ class RoundTest < Minitest::Test
     round = @round
 
     assert_instance_of Deck, round.deck
+    assert_equal @deck, round.deck
   end
 
   def test_input_must_be_a_deck
