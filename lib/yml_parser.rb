@@ -13,7 +13,10 @@ class YmlParser
 
       @data = @file
 
-        # bonus: add check to make sure only arrays with 3 elements [question, answer, category] are loaded
+      @data = @data.find_all do |entry|
+        # only keep entries with three values (question, answer, category)
+        entry.length == 3
+      end
 
     end
 

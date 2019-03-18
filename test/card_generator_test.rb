@@ -51,10 +51,19 @@ class CardGeneratorTest < Minitest::Test
     card_generator = CardGenerator.new(data)
     cards = card_generator.cards
 
-    assert_equal 10, cards[0].answer
+    assert_equal "10", cards[0].answer
     assert_equal "STEM", cards[0].category
 
     assert_equal "red panda", cards[1].answer
     assert_equal "Turing Staff", cards[1].category
+  end
+
+  def test_invalid_yml_inputs_are_not_stored_as_cards
+    filename = "bad_cards.yml" # has 4 valid cards and 2 invalid ones
+    data = YmlParser.new(filename)
+    card_generator = CardGenerator.new(data)
+    cards = card_generator.cards
+
+    assert_equal 4, cards.count
   end
 end
