@@ -1,6 +1,7 @@
 require './lib/card'
 require './lib/deck'
 require './lib/txt_parser'
+require './lib/yml_parser'
 
 class CardGenerator
   attr_reader :cards
