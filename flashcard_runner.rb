@@ -3,6 +3,7 @@ require './lib/deck'
 require './lib/turn'
 require './lib/round'
 require './lib/card_generator'
+require './lib/txt_parser'
 
 ####### replaced this part with the file import below #######
 # # Create some Cards
@@ -15,7 +16,8 @@ require './lib/card_generator'
 # deck = Deck.new([card_1, card_2, card_3, card_4])
 
 filename = "cards.txt"
-deck_prep = CardGenerator.new(filename).cards
+data = TxtParser.new(filename)
+deck_prep = CardGenerator.new(data).cards
 deck = Deck.new(deck_prep)
 
 # Create a new Round using the Deck you created
